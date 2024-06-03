@@ -31,8 +31,8 @@ This project is a recreation of the popular Flappy Bird game using Python and th
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/yourusername/flappy-bird.git
-    cd flappy-bird
+    git clone https://github.com/Evgeniy20181/FlappyBirdsPy.git
+    cd https://github.com/Evgeniy20181/FlappyBirdsPy.git
     ```
 
 2. **Create a virtual environment:**
@@ -52,12 +52,12 @@ This project is a recreation of the popular Flappy Bird game using Python and th
 
 4. **Install the required packages:**
     ```sh
-    pip install -r requirements.txt
+    pip install pygame -y
     ```
 
 5. **Run the game:**
     ```sh
-    python flappy_bird.py
+    python main.py
     ```
 
 ## How to Play
