@@ -105,7 +105,7 @@ class Game:
         self.bird = Bird()
         self.pipes = Pipes()
 
-        self.game_over = False
+        self.game_over = True
         self.over_img = pygame.image.load("./imgs/img_45.png").convert_alpha()
         self.over_rect = self.over_img.get_rect(center=(self.width // 2, self.height // 2))
 
@@ -178,9 +178,10 @@ class Game:
             self.screen.blit(self.floor_img, (self.floor_x, 550))
 
             if not self.game_over:
+                if self.bird_rect.top <= 0 or self.bird_rect.bottom >= 550:
+                    game_over = True
                 self.bird.update()
                 self.bird.draw(self.screen)
-
                 self.pipes.draw(self.screen)
                 self.game_over = self.pipes.update(self.bird.bird_rect)
 
