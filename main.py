@@ -178,8 +178,9 @@ class Game:
             self.screen.blit(self.floor_img, (self.floor_x, 550))
 
             if not self.game_over:
-                if self.bird_rect.top <= 0 or self.bird_rect.bottom >= 550:
-                    game_over = True
+                if self.bird.bird_rect.top <= 0 or self.bird.bird_rect.bottom >= 550:
+                    self.game_over = True
+                    continue
                 self.bird.update()
                 self.bird.draw(self.screen)
                 self.pipes.draw(self.screen)
