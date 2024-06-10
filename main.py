@@ -2,7 +2,7 @@ import pygame
 import sys
 import random
 from typing import List, Tuple
-
+import time
 class Bird:
     def __init__(self) -> None:
         # Load bird images
@@ -93,6 +93,8 @@ class Game:
     def __init__(self) -> None:
         # Initialize game window and assets
         pygame.init()
+        pygame.mixer.init() #music engine
+
         self.width, self.height = 350, 622
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.width, self.height))
@@ -113,6 +115,19 @@ class Game:
         self.high_score = 0
         self.score_time = True
         self.score_font = pygame.font.Font("FreeSansBold.ttf", 27)
+
+        #music
+        self.background_music = pygame.mixer.Sound('./sounds/Flappy Bird Theme Song.mp3')
+        self.score_sound = pygame.mixer.Sound('./sounds/score.wav')
+        self.game_over_sound = pygame.mixer.Sound('./sounds/gameOver.mp3')
+
+        # Set volume to 85%
+        self.background_music.set_volume(0.25)
+        self.score_sound.set_volume(0.3)
+        self.game_over_sound.set_volume(0.85)
+
+        # Start playing background music
+        self.background_music.play(loops=-1)
 
     def draw_floor(self) -> None:
         # Draw the floor (moving ground)
@@ -141,6 +156,7 @@ class Game:
                 if 65 < pipe.centerx < 69 and self.score_time:
                     self.score += 1
                     self.score_time = False
+                    self.score_sound.play()  # Play score sound
                 if pipe.left <= 0:
                     self.score_time = True
 
@@ -167,6 +183,7 @@ class Game:
                         self.bird.reset()
                         self.score_time = True
                         self.score = 0
+                        
 
                 if event.type == self.bird.bird_flap:
                     self.bird.animate()
@@ -180,17 +197,28 @@ class Game:
             if not self.game_over:
                 if self.bird.bird_rect.top <= 0 or self.bird.bird_rect.bottom >= 550:
                     self.game_over = True
+                    self.background_music.stop()   # Pause background music
+                    self.game_over_sound.play()  # Play game over sound
+                    
+                    pygame.time.wait(int(self.game_over_sound.get_length())*1000)
+                    self.background_music.play(loops=-1)
                     continue
                 self.bird.update()
                 self.bird.draw(self.screen)
                 self.pipes.draw(self.screen)
                 self.game_over = self.pipes.update(self.bird.bird_rect)
 
+                if self.game_over:
+                    self.background_music.stop()   # Pause background music
+                    self.game_over_sound.play()  # Play game over sound
+                    pygame.time.wait(int(self.game_over_sound.get_length())*1000)
+                    self.background_music.play(loops=-1)
                 self.score_update()
                 self.draw_score("game_on")
             else:
                 self.screen.blit(self.over_img, self.over_rect)
                 self.draw_score("game_over")
+                #print("game over")
 
             self.floor_x -= 1
             if self.floor_x < -448:
