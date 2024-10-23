@@ -1,5 +1,5 @@
 # Flappy Bird Game
-
+[![Build](https://github.com/Evgeniy20181/FlappyBirdsPy/actions/workflows/python-app.yml/badge.svg)](https://github.com/Evgeniy20181/FlappyBirdsPy/actions/workflows/python-app.yml)
 ![Flappy Bird](./imgs/flappy_bird_banner.png)
 
 A classic Flappy Bird game built with Python and Pygame.
