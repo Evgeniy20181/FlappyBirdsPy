@@ -2,7 +2,7 @@ import pygame
 import sys
 import random
 from typing import List, Tuple
-#import time
+
 class Bird:
     def __init__(self) -> None:
         # Load bird images
